@@ -15,7 +15,6 @@ const createProduct = async (req, res) => {
     const Product = new productModle(req.body);
     await Product.save();
     res.status(201).send("product created successfully..");
-    console.log(Product);
   } catch (error) {
     res.status(501).send("server issue..", error);
   }
@@ -34,10 +33,24 @@ const showProduct = async (req, res) => {
 // Deleting products;;
 const deleteProduct = async (req, res) => {
   try {
-    console.log(req.params.id);
     const Product = await productModle.findByIdAndDelete(req.params.id);
     res.status(200).send(`delete Product ${Product}`);
-  } catch (error) {}
+  } catch (error) {
+    res.status(501).send("server issue..", error);
+  }
+};
+
+//
+
+const singleproduct = async (req, res) => {
+  try {
+    const Id = req.params.abc;
+    const Product = await productModle.findById(Id);
+    console.log(Product);
+    res.status(200).json({ message: "krishna", data: Product });
+  } catch (error) {
+    res.status(501).send("server issue..", error);
+  }
 };
 
 module.exports = {
@@ -45,4 +58,5 @@ module.exports = {
   createProduct,
   showProduct,
   deleteProduct,
+  singleproduct,
 };
