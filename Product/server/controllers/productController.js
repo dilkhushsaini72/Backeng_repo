@@ -24,15 +24,25 @@ const createProduct = async (req, res) => {
 // Show products using GET method
 const showProduct = async (req, res) => {
   try {
-    const Product = await productModle.find(); 
-    res.status(200).send(Product)
+    const Product = await productModle.find();
+    res.status(200).send(Product);
   } catch (error) {
     res.status(501).send("server issue..", error);
   }
+};
+
+// Deleting products;;
+const deleteProduct = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const Product = await productModle.findByIdAndDelete(req.params.id);
+    res.status(200).send(`delete Product ${Product}`);
+  } catch (error) {}
 };
 
 module.exports = {
   homeController,
   createProduct,
   showProduct,
+  deleteProduct,
 };
